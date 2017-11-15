@@ -15,7 +15,7 @@ Otherwise, the expected parameters--all optional--and their defaults are as foll
 
 ************ COMPILATION ************
 
-External requirements are limited to the Eigen header-only library and Intel Threading Building Blocks; the Eigen folder must be within an include directory, and the TBB library must be linked against. Suggested compilation parameters:
+You must compile with support for C++11. External requirements are limited to the Eigen header-only library and Intel Threading Building Blocks; the Eigen folder must be within an include directory, and the TBB library must be linked against. Suggested compilation parameters:
 
 g++ -ltbb -I"/wherever/eigen/is/located" main.cpp bowyer_watson.cpp
 

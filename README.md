@@ -1,6 +1,5 @@
 # BowyerWatson
-Implementation of the Bowyer-Watson algorithm (with modified Lloyd relaxation) for triangulations of pointsets on the unit sphere.
-Created by Joshua Brinsfield, 2017.
+Implementation of the Bowyer-Watson algorithm (with modified Lloyd relaxation) for finding Delaunay triangulations of pointsets on the unit sphere.
 
 ************ EXECUTION ************
 
@@ -32,6 +31,8 @@ See main.cpp and the comments in bowyer_watson.h for usage. In short:
 
 (4) Call bw.get_mesh(Triangle *triangle_pointer, bool true_to_call_delete_on_all_the_triangles) to obtain a BowyerWatson::Mesh object representing the triangle mesh you have created in a more useful form. The mesh consists of an std::vector<float> storing the vertices (the Nth point's x,y,z coordinates are vertices[3*n], vertices[3*N+1], and vertices[3*N+2], respectively) and an std::vector<unsigned int> storing the indices of the vertices belonging to particular triangles (the Mth triangles vertices are the triangles[3*M]th, triangles[3*M+1]th, and triangles[3*M+2]th points, respectively, in counterclockwise order).
 
+NOTE: If you are seeking tilings of the sphere by Voronoi polygons, they can readily be constructed from the Delaunay triangulations produced by this program, being dual to them.
+
 ************ POTENTIAL ISSUES ************
 
 (1) There may be issues with pointsets containing multiple copies of the same point; at the very least, this will result in a mesh containing degenerate triangles.
@@ -49,3 +50,9 @@ See main.cpp and the comments in bowyer_watson.h for usage. In short:
 (3) Intel's Threading Building Blocks library is utilized in two places: first, it is utilized in sorting points contained within triangles being removed into the appropriate newly created triangles, and second, it is utilized in actually copying the points into the new triangles. Special care is taken to minimize cache invalidations during these processes; the cache size is not queried from the system but is assumed to be 64, though this can be changed within the BowyerWatson class. The question of when datasets are sufficiently large to benefit from using Intel's parallel_for rather than processing them serially has been addressed by tweaking several parameters, which are marked by comments in the code, according to what values empirically gave the best results on my own machine.
 
 (4) Multithreading could also be used in point generation and mesh construction, as well as modified Lloyd relaxation, but at present it is not (in fact, the mesh generation algorithm could be greatly improved). Within the Bowyer-Watson algorithm, the process of discovering which triangles should be removed could be parallelized, and if multiple non-overlapping sets of removable triangles could be discovered simultaneously they could be processed in paraallel; this, however, would require substantial modifications to the code and would likely require checks too complex to justify the benefit, and so it has not been done.
+
+************ LICENSE AND ATTRIBUTION ************
+
+Created by Joshua Brinsfield (sapphous at gmail.com) in 2017.
+Released under the MIT license (see license file).
+I was unable to find a simple implementation of Delaunay triangulation on the sphere, so I made this. Have a blast, if this is useful to you.

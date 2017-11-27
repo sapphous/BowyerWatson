@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
         case(3):
             ss.clear();
             ss.str(argv[2]);
-            if(!(ss >> relaxations) || relaxations == 0)
+            if(!(ss >> relaxations))
             {
                 cout << "Received invalid input \"" << argv[2] << "\" as argument 2; this should be a nonnegative integer specifying the number of times to perform modified Lloyd relaxation. Use argument \"--help\" to see help menu." << endl;
                 input_erroneous = true;
